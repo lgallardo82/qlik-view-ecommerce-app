@@ -1,0 +1,23 @@
+//----------------------- VARIABLES  PARA LA TABLA EN QVD L1 ----------------------
+	
+    SET vCSVFileName     = 'olist_geolocation_dataset';
+    SET vTableName       = 'geolocation';
+    SET vQVDFileName     = 'L1_Geolocation';
+    SET vDescripcion     = 'Tabla de Geolocalización';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD geolocation_zip_code_prefix		AS %geolocation_id, 
+     geolocation_lat, 
+     geolocation_lng, 
+     geolocation_city, 
+     geolocation_state
+FROM
+[$(vPathCsv)\$(vCSVFileName).csv]
+(txt, codepage is 1252, embedded labels, delimiter is ',', msq);
+
+
+STORE $(vTableName) INTO $(vPathQvdL1)\$(vQVDFileName).qvd (qvd);
+
+DROP TABLE $(vTableName);

@@ -1,0 +1,19 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileNameL2 = 'L2_Order_Payments';
+    SET vTableName = 'order_payments';
+    SET vQVDFileNameL3 = 'L3_Order_Payments_Dim_Table';
+    SET vDescripcion = 'Tabla de Dimensiones de Pagos de Ordenes';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD %order_payment_id, 
+     payment_sequential, 
+     payment_type, 
+     payment_installments, 
+     payment_value
+FROM
+[$(vPathQvdL2)\$(vQVDVFileNameL2).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);

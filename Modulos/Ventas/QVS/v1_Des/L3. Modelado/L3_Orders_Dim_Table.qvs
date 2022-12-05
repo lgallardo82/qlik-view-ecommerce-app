@@ -1,0 +1,53 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileName1L2 = 'L2_Orders';
+    SET vQVDVFileName2L2 = 'L2_Customers';
+    SET vQVDVFileName3L2 = 'L2_Geolocation';
+    SET vTableName = 'orders';
+    SET vQVDFileNameL3 = 'L3_Orders_Dim_Table';
+    SET vDescripcion = 'Tabla de Dimensiones de Productos';
+//---------------------------------------------------------------------------------
+
+
+tbl_Tmp0:
+LOAD %order_id, 
+     %customer_id, 
+     order_status, 
+     order_purchase_timestamp, 
+     order_approved_at, 
+     order_delivered_carrier_date, 
+     order_delivered_customer_date, 
+     %order_estimated_delivery_date
+FROM
+[$(vPathQvdL2)\$(vQVDVFileName1L2).qvd](qvd);
+
+
+LEFT JOIN (tbl_Tmp0)
+
+customers:
+LOAD %customer_id, 
+     customer_unique_id, 
+     %geolocation_id, 
+     customer_city, 
+     customer_state
+FROM
+[$(vPathQvdL2)\$(vQVDVFileName2L2).qvd](qvd);
+
+
+LEFT JOIN (tbl_Tmp0)
+
+geolocation:
+LOAD %geolocation_id, 
+     geolocation_lat, 
+     geolocation_lng, 
+     geolocation_city, 
+     geolocation_state
+FROM
+[$(vPathQvdL2)\$(vQVDVFileName3L2).qvd](qvd);
+
+
+
+RENAME TABLE tbl_Tmp0 TO $(vTableName);
+
+STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);
+

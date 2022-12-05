@@ -1,0 +1,38 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileName1L2 = 'L2_Products';
+    SET vQVDVFileName2L2 = 'L2_Product_Category';
+    SET vTableName = 'products';
+    SET vQVDFileNameL3 = 'L3_Products_Dim_Table';
+    SET vDescripcion = 'Tabla de Dimensiones de Productos';
+//---------------------------------------------------------------------------------
+
+
+tbl_Tmp0:
+LOAD %product_id, 
+     %product_category_name, 
+     product_name_lenght, 
+     product_description_lenght, 
+     product_photos_qty, 
+     product_weight_g, 
+     product_length_cm, 
+     product_height_cm, 
+     product_width_cm
+FROM
+[$(vPathQvdL2)\$(vQVDVFileName1L2).qvd](qvd);
+
+
+LEFT JOIN (tbl_Tmp0)
+
+product_category:
+LOAD 
+     %product_category_name  AS category, 
+     product_category_name_english
+FROM
+[$(vPathQvdL2)\$(vQVDVFileName2L2).qvd](qvd);
+
+
+
+RENAME TABLE tbl_Tmp0 TO $(vTableName);
+
+STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);

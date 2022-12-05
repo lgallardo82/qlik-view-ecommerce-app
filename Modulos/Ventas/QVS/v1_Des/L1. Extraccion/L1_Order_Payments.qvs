@@ -1,0 +1,24 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD-------------------------
+	
+    SET vCSVFileName     = 'olist_order_payments_dataset';
+    SET vTableName       = 'order_payments';
+    SET vQVDFileName     = 'L1_Order_Payments';
+    SET vDescripcion     = 'Tabla de Ordenes de Pagos';
+ //---------------------------------------------------------------------------------
+
+
+
+$(vTableName):
+LOAD order_id					AS %order_payment_id, 
+     payment_sequential, 
+     payment_type, 
+     payment_installments, 
+     payment_value
+FROM
+[$(vPathCsv)\$(vCSVFileName).csv]
+(txt, codepage is 1252, embedded labels, delimiter is ',', msq);
+
+
+STORE $(vTableName) INTO $(vPathQvdL1)\$(vQVDFileName).qvd (qvd);
+
+DROP TABLE $(vTableName);

@@ -1,0 +1,23 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD-------------------------
+	
+    SET vCSVFileName     = 'olist_sellers_dataset';
+    SET vTableName       = 'sellers';
+    SET vQVDFileName     = 'L1_Sellers';
+    SET vDescripcion     = 'Tabla de Vendedores';
+//---------------------------------------------------------------------------------
+
+
+
+$(vTableName):
+LOAD seller_id							AS %seller_id, 
+     seller_zip_code_prefix, 
+     seller_city, 
+     seller_state
+FROM
+[$(vPathCsv)\$(vCSVFileName).csv]
+(txt, codepage is 1252, embedded labels, delimiter is ',', msq);
+
+
+STORE $(vTableName) INTO $(vPathQvdL1)\$(vQVDFileName).qvd (qvd);
+
+DROP TABLE $(vTableName);

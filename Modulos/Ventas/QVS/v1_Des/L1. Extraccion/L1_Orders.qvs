@@ -1,0 +1,27 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD-------------------------
+	
+    SET vCSVFileName     = 'olist_orders_dataset';
+    SET vTableName       = 'orders';
+    SET vQVDFileName     = 'L1_Orders';
+    SET vDescripcion     = 'Tabla de Ordenes';
+//---------------------------------------------------------------------------------
+
+
+
+$(vTableName):
+LOAD order_id							AS %order_id, 
+     customer_id 						AS %customer_id, 
+     order_status, 
+     order_purchase_timestamp, 
+     order_approved_at, 
+     order_delivered_carrier_date, 
+     order_delivered_customer_date, 
+     order_estimated_delivery_date		AS %order_estimated_delivery_date
+FROM
+[$(vPathCsv)\$(vCSVFileName).csv]
+(txt, codepage is 1252, embedded labels, delimiter is ',', msq);
+
+
+STORE $(vTableName) INTO $(vPathQvdL1)\$(vQVDFileName).qvd (qvd);
+
+DROP TABLE $(vTableName);

@@ -1,0 +1,21 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileNameL1 = 'L1_Geolocation';
+    SET vTableName = 'geolocation_dim_table';
+    SET vQVDFileNameL2 = 'L2_Geolocation';
+    SET vDescripcion = 'Tabla de Dimensiones de Geolocalización';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD %geolocation_id, 
+     geolocation_lat, 
+     geolocation_lng, 
+     geolocation_city, 
+     geolocation_state
+FROM
+[$(vPathQvdL1)\$(vQVDVFileNameL1).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL2)\$(vQVDFileNameL2).qvd (qvd);
+
+DROP TABLE $(vTableName);

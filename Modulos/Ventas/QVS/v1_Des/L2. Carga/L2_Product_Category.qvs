@@ -1,0 +1,18 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileNameL1 = 'L1_Product_Category';
+    SET vTableName = 'product_category';
+    SET vQVDFileNameL2 = 'L2_Product_Category';
+    SET vDescripcion = 'Tabla de Dimensiones de Categoría de Productos';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD %product_category_name, 
+     product_category_name_english
+FROM
+[$(vPathQvdL1)\$(vQVDVFileNameL1).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL2)\$(vQVDFileNameL2).qvd (qvd);
+
+DROP TABLE $(vTableName);

@@ -1,0 +1,21 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------    
+    SET vQVDVFileNameL2 = 'L2_Order_Items';
+    SET vTableName = 'order_items_fact_table';
+    SET vQVDFileNameL3 = 'L3_Order_Items_Dim_Table';
+    SET vDescripcion = 'Tabla de Hechos de Ordenes de Items';
+//---------------------------------------------------------------------------------
+
+
+
+$(vTableName):
+LOAD %order_payment_id, 
+     %order_item_id, 
+     %product_id, 
+     %seller_id, 
+     %order_estimated_delivery_date, 
+     price, 
+     freight_value
+FROM
+[$(vPathQvdL2)\$(vQVDVFileNameL2).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);

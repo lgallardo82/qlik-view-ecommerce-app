@@ -1,0 +1,18 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileNameL2 = 'L2_Sellers';
+    SET vTableName = 'sellers';
+    SET vQVDFileNameL3 = 'L3_Sellers_Dim_Table';
+    SET vDescripcion = 'Tabla de Dimensiones de Vendedores';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD %seller_id, 
+     seller_zip_code_prefix, 
+     seller_city, 
+     seller_state
+FROM
+[$(vPathQvdL2)\$(vQVDVFileNameL2).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);

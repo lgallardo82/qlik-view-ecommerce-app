@@ -1,0 +1,21 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileNameL2 = 'L2_Order_Reviews';
+    SET vTableName = 'order_reviews';
+    SET vQVDFileNameL3 = 'L3_Order_Reviews_Dim_Table';
+    SET vDescripcion = 'Tabla de Dimensiones de Revisión de Ordenes';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD %review_id, 
+     %order_item_id, 
+     review_score, 
+     review_comment_title, 
+     review_comment_message, 
+     review_creation_date, 
+     review_answer_timestamp
+FROM
+[$(vPathQvdL2)\$(vQVDVFileNameL2).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);

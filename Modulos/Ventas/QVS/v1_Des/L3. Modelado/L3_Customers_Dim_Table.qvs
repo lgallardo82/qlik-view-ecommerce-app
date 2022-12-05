@@ -1,0 +1,20 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    //SET vQVDVFileNameL2 = 'L2_Customers';
+    //SET vTableName = 'customers_dim_table';
+    //SET vQVDFileNameL3 = 'L3_Customers_Dim_Table';
+    //SET vDescripcion = 'Tabla de Dimensiones de Clientes';
+//---------------------------------------------------------------------------------
+
+
+//$(vTableName):
+//LOAD %customer_id, 
+     //customer_unique_id, 
+     //%geolocation_id, 
+     //customer_city, 
+     //customer_state
+//FROM
+//[$(vPathQvdL2)\$(vQVDVFileNameL2).qvd](qvd);
+
+//STORE $(vTableName) INTO $(vPathQvdL3)\$(vQVDFileNameL3).qvd (qvd);
+

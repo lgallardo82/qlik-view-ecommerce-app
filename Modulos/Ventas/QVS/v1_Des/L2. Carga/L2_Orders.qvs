@@ -1,0 +1,24 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD L2----------------------
+	
+    SET vQVDVFileNameL1 = 'L1_Orders';
+    SET vTableName = 'orders';
+    SET vQVDFileNameL2 = 'L2_Orders';
+    SET vDescripcion = 'Tabla de Dimensiones de Ordenes';
+//---------------------------------------------------------------------------------
+
+
+$(vTableName):
+LOAD %order_id, 
+     %customer_id, 
+     order_status, 
+     order_purchase_timestamp, 
+     order_approved_at, 
+     order_delivered_carrier_date, 
+     order_delivered_customer_date, 
+     %order_estimated_delivery_date
+FROM
+[$(vPathQvdL1)\$(vQVDVFileNameL1).qvd](qvd);
+
+STORE $(vTableName) INTO $(vPathQvdL2)\$(vQVDFileNameL2).qvd (qvd);
+
+DROP TABLE $(vTableName);

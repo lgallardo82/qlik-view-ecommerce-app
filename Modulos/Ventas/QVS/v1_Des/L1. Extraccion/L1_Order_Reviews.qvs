@@ -1,0 +1,26 @@
+//------------------------ VARIABLES  PARA LA TABLA EN QVD-------------------------
+	
+    SET vCSVFileName     = 'olist_order_reviews_dataset';
+    SET vTableName       = 'order_reviews';
+    SET vQVDFileName     = 'L1_Order_Reviews';
+    SET vDescripcion     = 'Tabla de Revision de Ordenes';
+ //---------------------------------------------------------------------------------
+
+
+
+$(vTableName):
+LOAD review_id						AS %review_id, 
+     order_id						AS %order_item_id, 
+     review_score, 
+     review_comment_title, 
+     review_comment_message, 
+     review_creation_date, 
+     review_answer_timestamp
+FROM
+[$(vPathCsv)\$(vCSVFileName).csv]
+(txt, codepage is 1252, embedded labels, delimiter is ',', msq);
+
+
+STORE $(vTableName) INTO $(vPathQvdL1)\$(vQVDFileName).qvd (qvd);
+
+DROP TABLE $(vTableName);
